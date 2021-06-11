@@ -1,0 +1,44 @@
+.input {
+  width: 200px;
+  height: 30px;
+  border: 2px solid blue;
+}
+.linet {
+  text-decoration: line-through;
+}
+.form-control {
+  width: 25%;
+}
+.inline {
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+  align-items: center;
+  justify-content: center;
+  margin-top: 3%;
+}
+.inline button {
+  margin-left: 40px;
+  width: 100px;
+}
+.delete {
+  background-color: red;
+  color: #c492f3;
+}
+
+.btn-danger:hover {
+  color: white;
+}
+.strips {
+  background-color: rgb(224, 219, 219);
+}
+table {
+  margin-top: 80px;
+}
+
+input {
+  width: 300px;
+  height: 35px;
+  border-radius: 5px;
+  margin-left: 200px;
+}
