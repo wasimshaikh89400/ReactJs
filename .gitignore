@@ -4,9 +4,9 @@
 /node_modules
 /.pnp
 .pnp.js
-FuncNew.jsx
-StateCheck.jsx
-StateFun.jsx
+/FuncNew.jsx
+/StateCheck.jsx
+/StateFun.jsx
 
 # testing
 /coverage

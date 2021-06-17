@@ -1,0 +1,30 @@
+.sideBarDiv {
+  display: flex;
+  color: gray;
+  padding-top: 6px;
+  cursor: pointer;
+}
+.message {
+  visibility: hidden;
+  margin-left: 70px;
+  font-size: 1.1rem;
+}
+.sideBarDiv:hover .message {
+  visibility: visible;
+}
+.sideBarDiv > .MuiSvgIcon-root {
+  margin-left: 10px;
+  margin-right: 20px;
+  font-size: 1.3rem;
+}
+.sideBarDiv h3 {
+  font-size: 1.1rem;
+}
+.navBarActive {
+  visibility: visible;
+}
+
+.sideBarDiv:hover {
+  background-color: rgba(250, 92, 92, 0.5);
+  color: red;
+}

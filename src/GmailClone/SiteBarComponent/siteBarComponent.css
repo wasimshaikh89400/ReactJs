@@ -1,0 +1,17 @@
+.sideButton {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  box-shadow: 2px 2px rgb(219, 217, 217);
+  border-radius: 50px;
+  font-size: 1.3rem;
+  transition: 0.5s ease-in;
+  margin-bottom: 20px;
+}
+.sideButton > .MuiSvgIcon-root {
+  font-size: 2rem;
+}
+
+.sideButton:hover {
+  background-color: rgb(233, 231, 231);
+}

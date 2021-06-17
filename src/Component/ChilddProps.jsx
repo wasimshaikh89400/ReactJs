@@ -11,6 +11,9 @@ class ChilddProps extends Component {
       data: props.data,
       searchUser: "",
       selectValue: "firstName",
+      todos: ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k"],
+      currentPage: 1,
+      todosPerPage: 3,
     };
   }
   searchNewUser = (event) => {
@@ -36,8 +39,90 @@ class ChilddProps extends Component {
   //       });
   //     console.log(this.state.searchUser);
   //   };
+  handleClick = (event) => {
+    this.setState({
+      currentPage: Number(event.target.id),
+    });
+  };
 
+  showBack = () => {
+    console.log(this.state.currentPage);
+  };
+
+  showNext = () => {};
   render() {
+    const { todos, currentPage, todosPerPage } = this.state;
+
+    // Logic for displaying todos
+    const indexOfLastTodo = currentPage * todosPerPage;
+    const indexOfFirstTodo = indexOfLastTodo - todosPerPage;
+    const currentTodos = this.props.data.slice(
+      indexOfFirstTodo,
+      indexOfLastTodo
+    );
+    const renderTodos = currentTodos.map((data, index) => {
+      return (
+        <tr key={index}>
+          <th scope="row">{index + 1}</th>
+          <td>{data.firstName}</td>
+          <td>{data.lastName}</td>
+          <td>{data.email}</td>
+          <td>{data.gender}</td>
+          <td>{data.dob}</td>
+          <td>{data.mobileNo}</td>
+          <td>{data.address}</td>
+          <td>
+            <button
+              onClick={() => this.props.deleteData(data._id)}
+              style={{
+                border: "none",
+                color: "red",
+                background: "inherit",
+              }}
+            >
+              <FontAwesomeIcon icon={faTrash}></FontAwesomeIcon>
+            </button>
+          </td>
+          <td>
+            <button
+              onClick={() => this.props.editData(data._id, index)}
+              style={{
+                border: "none",
+                color: "blue",
+                background: "inherit",
+              }}
+            >
+              <FontAwesomeIcon icon={faEdit}></FontAwesomeIcon>
+            </button>
+          </td>
+        </tr>
+      );
+    });
+    const pageNumbers = [];
+    for (
+      let i = 1;
+      i <= Math.ceil(this.props.data.length / todosPerPage);
+      i++
+    ) {
+      pageNumbers.push(i);
+    }
+    const renderPageNumbers = pageNumbers.map((number) => {
+      return (
+        <span
+          style={{ marginLeft: "10px", cursor: "pointer" }}
+          key={number}
+          id={number}
+          onClick={this.handleClick}
+        >
+          {number}
+        </span>
+      );
+    });
+    // const slicePageData = renderPageNumbers.slice(
+    //   currentPage - 1,
+    //   currentPage + 2
+    // );
+
     return (
       <div>
         <b style={{ marginRight: "20px" }}>Search By</b>
@@ -45,7 +130,7 @@ class ChilddProps extends Component {
           value={this.state.selectValue}
           onChange={this.changeValue}
           style={{
-            marginleft: "20px",
+            marginleft: "200px",
             marginRight: "20px",
             height: "40px",
             width: "250px",
@@ -93,45 +178,38 @@ class ChilddProps extends Component {
               <th scope="col">Edit</th>
             </tr>
           </thead>
-          <tbody>
-            {this.props.data.map((data, index) => (
-              <tr key={index}>
-                <th scope="row">{index + 1}</th>
-                <td>{data.firstName}</td>
-                <td>{data.lastName}</td>
-                <td>{data.email}</td>
-                <td>{data.gender}</td>
-                <td>{data.dob}</td>
-                <td>{data.mobileNo}</td>
-                <td>{data.address}</td>
-                <td>
-                  <button
-                    onClick={() => this.props.deleteData(data._id)}
-                    style={{
-                      border: "none",
-                      color: "red",
-                      background: "inherit",
-                    }}
-                  >
-                    <FontAwesomeIcon icon={faTrash}></FontAwesomeIcon>
-                  </button>
-                </td>
-                <td>
-                  <button
-                    onClick={() => this.props.editData(data._id, index)}
-                    style={{
-                      border: "none",
-                      color: "blue",
-                      background: "inherit",
-                    }}
-                  >
-                    <FontAwesomeIcon icon={faEdit}></FontAwesomeIcon>
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
+          <tbody>{renderTodos}</tbody>
         </table>
+        <button
+          id={currentPage - 1}
+          onClick={this.handleClick}
+          disabled={currentPage < 2}
+          className="btn btn-warning"
+          style={{ marginLeft: "550px" }}
+        >
+          PREVIOUS
+        </button>{" "}
+        {/* <span id={currentPage - 1} onClick={this.handleClick}>
+          {pageNumbers[currentPage - 2]}
+        </span> */}
+        <span
+          id={currentPage}
+          onClick={this.handleClick}
+          style={{ marginLeft: "40px", marginRight: "40px" }}
+        >
+          {pageNumbers[currentPage - 1]}
+        </span>
+        {/* <span id={currentPage + 1} onClick={this.handleClick}>
+          {pageNumbers[currentPage]}
+        </span> */}
+        <button
+          id={currentPage + 1}
+          onClick={this.handleClick}
+          disabled={pageNumbers.length < currentPage + 1}
+          className="btn btn-success"
+        >
+          NEXT
+        </button>
       </div>
     );
   }

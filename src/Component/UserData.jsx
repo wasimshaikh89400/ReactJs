@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 import axios from "axios";
 import "./stateFun.css";
 import ChilddProps from "./ChilddProps";
+import ReactRouting from "./ReactRouting";
 
 const UserData = () => {
   const [firstName, setFirstName] = useState("");
@@ -179,21 +180,23 @@ const UserData = () => {
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes!",
     }).then((result) => {
-      // if (result.isConfirmed) {
-      //   let newData = userData.filter((ele, id) => {
-      //     return index !== id;
-      //   });
-      //   setUserData(newData);
-      // }
-      axios
-        .delete(`http://localhost:5000/api/userData/${index}`)
-        .then((response) => {
-          console.log(response);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      if (result.isConfirmed) {
+        //   let newData = userData.filter((ele, id) => {
+        //     return index !== id;
+        //   });
+        //   setUserData(newData);
+        // }
+        axios
+          .delete(`http://localhost:5000/api/userData/${index}`)
+          .then((response) => {
+            console.log(response);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
     });
+    setSerachAll(true);
   };
   const editData = (id, index) => {
     console.log(id, index);
@@ -278,14 +281,15 @@ const UserData = () => {
   };
   const findUser = (userSearch, selectUser) => {
     setSerachAll(false);
-    console.log(selectUser);
+    console.log(userSearch);
+    // console.log(selectUser);
     axios
       .get(`http://localhost:5000/api/getUserData/${userSearch}/${selectUser}`)
       .then((response) => {
         setUserData(response.data);
         console.log(response.data[0].firstName);
         if (response.data[0].firstName === "notFound") {
-          setSerachAll(true);
+          // setSerachAll(true);
           Swal.fire({
             title: "Warning",
             text: "User Not found",
@@ -298,6 +302,34 @@ const UserData = () => {
       .catch((err) => {
         console.log("error" + err);
       });
+    // let i = 0;
+    // setUserData(
+    //   userData.filter((ele, index) => {
+    //     if (
+    //       userSearch === ele.firstName ||
+    //       userSearch === ele.lastName ||
+    //       userSearch === ele.email
+    //     ) {
+    //       i++;
+    //       console.log(ele);
+    //       return ele;
+    //     }
+    //   })
+    // );
+
+    // setUserData(userDataNew);
+    // console.log(userDataNew);
+    console.log(userData);
+    // if (i === 0) {
+    //   Swal.fire({
+    //     title: "Warning",
+    //     text: "User Not found",
+    //     icon: "warning",
+    //     confirmButtonColor: "#3085d6",
+    //     confirmButtonText: "Yes!",
+    //   });
+    //   setSerachAll(true);
+    // }
   };
   const viewAll = () => {
     setSerachAll(true);
@@ -305,11 +337,14 @@ const UserData = () => {
   };
 
   return (
-    <div className="parentDiv">
+    <div
+      className="parentDiv"
+      style={{ marginLeft: "auto", marginRight: "auto" }}
+    >
       <button
         onClick={showFormData}
         style={{
-          margin: "50px 100px",
+          margin: "50px 0 50px 450px",
           padding: "10px 50px",
           color: "white",
           background: "linear-gradient(45deg,blueviolet,#c492f3)",
